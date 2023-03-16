@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import Theme from './src/Theme';
+import AppBar from './src/components/AppBar';
+import SearchBar from './src/components/SearchBar';
+import AdBanner from './src/components/AdBanner';
+
 
 export default function App() {
+
+  const handelSearch = (text) => {
+    console.log(text)
+  }
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.appContainer}>
+      <AppBar></AppBar>
+      <SearchBar onSearch={handelSearch}></SearchBar>
+      <AdBanner></AdBanner>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  appContainer: {
+    backgroundColor: Theme.grey,
   },
 });
