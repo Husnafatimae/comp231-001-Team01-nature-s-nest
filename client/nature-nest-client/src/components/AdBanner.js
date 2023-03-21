@@ -61,7 +61,7 @@ const AdBanner = () => {
 const styles = StyleSheet.create({
 
     container: {
-        marginTop: 15,
+        marginTop: 20,
     }, swipeContainer: {
         width: SCREEN_WIDTH * 0.93,
         alignSelf: 'center',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     },
     wrap: {
         width: SCREEN_WIDTH * 0.93,
-        height: SCREEN_HEIGHT * 0.20,
+        height: SCREEN_HEIGHT * 0.25,
         borderRadius: 15,
     },
     dotWrap: {
