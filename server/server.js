@@ -5,7 +5,7 @@ const { Plant, User, Order } = require('./models/models');
 const { connect } = require('./db')
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 async function start() {
     await connect();
