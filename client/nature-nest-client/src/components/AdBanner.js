@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     },
     wrap: {
         width: SCREEN_WIDTH * 0.93,
-        height: SCREEN_HEIGHT * 0.25,
+        height: SCREEN_HEIGHT * 0.23,
         borderRadius: 15,
     },
     dotWrap: {

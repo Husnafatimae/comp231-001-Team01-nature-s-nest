@@ -31,12 +31,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginHorizontal: 15,
-        marginTop: 12,
+        marginTop: 18,
     },
     text: {
-        fontSize: 35,
+        fontSize: 30,
         fontFamily: 'Regular',
         color: Theme.primaryColor,
+        letterSpacing: 1,
     },
     textButton: {
         fontSize: 13,

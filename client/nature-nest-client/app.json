@@ -20,6 +20,8 @@
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {}
-  }
+    "web": {},
+    "sdkVersion": "48.0.0"
+  },
+  "name": "nature-nest-client"
 }
