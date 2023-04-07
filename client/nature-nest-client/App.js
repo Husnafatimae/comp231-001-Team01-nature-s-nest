@@ -9,6 +9,7 @@ import DetailScreen from './src/screens/DetailScreen';
 import SearchResultScreen from './src/screens/SearchResultScreen';
 import CartScreen from './src/screens/cartScreen';
 import HomeScreen from './src/screens/homeScreen';
+import CheckOutScreen from './src/screens/checkOutScreen';
 
 import BottomTabNavigator from './src/navigation/bottomTabNavigator';
 
@@ -65,6 +66,11 @@ export default function App() {
         <Stack.Screen
           name="HomePage"
           component={BottomTabNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CheckOut"
+          component={CheckOutScreen}
           options={{ headerShown: false }}
         />
 

@@ -69,7 +69,11 @@ function CartScreen({ navigation }) {
                 ))
                 }
             </ScrollView >
-            <View><Text></Text></View>
+                <Pressable style={styles.button} onPress={() => {
+                    navigation.navigate('CheckOut')
+                }}>
+                    <Text style={styles.text}>Checkout</Text>
+                </Pressable>
         </View >)
 
 }
@@ -85,8 +89,8 @@ const styles = StyleSheet.create({
         color: Theme.primaryColor,
     },
     scroll: {
+        maxHeight: '70%',
         width: '100%',
-        height: 300,
     },
     card: {
         height: 100,
@@ -103,6 +107,24 @@ const styles = StyleSheet.create({
     },
     iconContainer: {
         alignItems: 'center'
+    },
+    button: {
+        bottom: 25,
+        marginHorizontal: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 18,
+        paddingHorizontal: 32,
+        borderRadius: 15,
+        elevation: 1,
+        backgroundColor: Theme.primaryColor,
+    },
+    text: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
     },
 
     removeContainer: {
