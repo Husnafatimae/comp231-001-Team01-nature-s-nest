@@ -5,34 +5,72 @@ import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 
-const data = ['Latest Sunflower Plant', 'Plant', 'Seed'];
 
-const images = [
-    'https://images.pexels.com/photos/15993218/pexels-photo-15993218.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    'https://images.pexels.com/photos/15329526/pexels-photo-15329526.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    'https://images.pexels.com/photos/15597164/pexels-photo-15597164.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 
-]
-
-function ProductCard() {
+function ProductCard({ data, navigation }) {
 
     const onChange = (nativeEvent) => {
 
     }
     const [showAlert, setShowAlert] = useState(false);
 
-    const handelFavouriteButton = () => {
+    const handelFavouriteButton = async (product) => {
         setShowAlert(true);
 
         setTimeout(() => {
             setShowAlert(false)
         }, 1000);
+
+        try {
+
+            product.unit = 1;
+            const existingData = await AsyncStorage.getItem('cart')
+            if(existingData !== null) {
+                const existingArray = JSON.parse(existingData)
+
+                let unitUpdateItem = null;
+                const newData = [];
+                existingArray.forEach(element => {
+                    if(element.name === product.name) {
+                        console.log('Names', element.name, product.name)
+                        unitUpdateItem = element
+                        element.unit += product.unit;
+                         newData.push(unitUpdateItem);
+                    } else {
+                    newData.push(element); }
+                });
+                console.log('check', unitUpdateItem);
+                if(unitUpdateItem === null) {
+                    existingArray.push(product)
+                    console.log('DATA', newData);
+                    console.log('Unit not changed')
+                    const jsonValue = JSON.stringify(existingArray)
+                      await AsyncStorage.setItem('cart', jsonValue);
+
+                } else if (unitUpdateItem !== null) {
+                    const jsonValue = JSON.stringify(newData)
+               await AsyncStorage.setItem('cart', jsonValue);
+
+                }
+              
+            } else {
+                const jsonValue = JSON.stringify([product])
+
+                await AsyncStorage.setItem('cart', jsonValue);
+            }
+
+            console.log(JSON.parse(await AsyncStorage.getItem('cart')))
+
+
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     //loads the fonts before rendering the UI elements
@@ -47,35 +85,24 @@ function ProductCard() {
     }
 
     return (
-        <View>
-            <ScrollView
-                onScroll={({ nativeEvent }) => onChange(nativeEvent)}
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                bounces={false}
-            >
-                {
-                    data.map((item, index) => {
-                        return (
-                            <View style={styles.card}>
-                                <Pressable onPress={() => { handelFavouriteButton() }} style={{ zIndex: 1 }} ><Feather name="heart" size={18} color={Theme.accentGreen} style={styles.icon} /></Pressable>
-                                <View style={styles.imageContainer}>
-                                    <Image style={styles.image} key={index} resizeMode='cover' source={{ uri: images[index] }} />
-                                </View>
-                                <View style={styles.textContainer}>
-                                    <Text style={(styles.title)}>{item.slice(0, 19) + "..."}</Text>
-                                    <Text style={styles.details}>$25.0</Text>
-                                </View>
-                            </View>
-                        )
-                    })
-                }
-            </ScrollView>
-            <AwesomeAlert
-                show={showAlert}
-                message="Product added to you cart!"
-            />
-        </View>
+        <Pressable onPress={() => navigation.navigate('Detail', data)}>
+
+            <View style={styles.card}>
+                <Pressable onPress={() => { handelFavouriteButton(data) }} style={{ zIndex: 1 }} ><Feather name="heart" size={18} color={Theme.accentGreen} style={styles.icon} /></Pressable>
+                <View style={styles.imageContainer}>
+                    <Image style={styles.image} key={data.url} resizeMode='cover' source={{ uri: data.url }} />
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={(styles.title)}>{data.name.slice(0, 16) + "..."}</Text>
+                    <Text style={styles.details}>{data.price}</Text>
+                </View>
+                <AwesomeAlert
+                    show={showAlert}
+                    showProgress={false}
+                    message="Product added to cart Sucessfully"
+                />
+            </View >
+        </Pressable>
     )
 }
 
@@ -108,7 +135,7 @@ const styles = StyleSheet.create({
         bottom: 10,
     },
     title: {
-        fontSize: 14,
+        fontSize: 13,
         fontFamily: 'SemiBold',
         lineHeight: 20,
 

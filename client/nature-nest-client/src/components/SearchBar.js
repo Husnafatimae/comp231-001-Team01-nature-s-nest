@@ -26,7 +26,7 @@ function SearchBar({ onSearch }) {
 
     return (
         <View>
-            <Text style={styles.title}>Welcome!</Text>
+
             <View style={styles.searchBar}>
                 <Feather name="search" size={24} color={Theme.lightGreen} />
                 <TextInput style={{ paddingHorizontal: 10 }} placeholder='What are you looking for?'
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         borderColor: Theme.lightGreen,
         borderWidth: 1.8,
         borderRadius: 30,
+        marginTop: 15,
     },
     title: {
         fontSize: 45,
