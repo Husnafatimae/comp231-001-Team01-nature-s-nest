@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 
 
 function CartScreen({ navigation }) {
+    
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     
@@ -27,6 +28,34 @@ function CartScreen({ navigation }) {
     setIsLoading(false);
     },[])
 
+
+    const deleteItem = async (product) => {
+        try {
+            
+            const existingData = await AsyncStorage.getItem('cart')
+            
+            const newData = [];
+            
+            if(existingData !== null) {
+                const existingArray = JSON.parse(existingData)
+                existingArray.forEach(element => {
+                    if(element.name !== product.name) {
+                         newData.push(element);
+                    } 
+                });
+
+                const jsonValue = JSON.stringify(newData)
+               await AsyncStorage.setItem('cart', jsonValue);
+
+            } 
+        } catch (e) 
+        {
+            console.log(e);
+        }
+
+        getData();
+    }
+
     return (
         <View style={styles.container}>
             <AppBar></AppBar>
@@ -40,11 +69,11 @@ function CartScreen({ navigation }) {
                         </View>
                         <View style={styles.nameContainer}>
                             <Text style={styles.name}>{e.name}</Text>
-                            <Text style={styles.price}>{e.price}</Text>
+                            <Text style={styles.price}>${e.price}</Text>
                         </View>
                         <View style={styles.iconContainer}>
                             <TouchableOpacity
-                                onPress={() => load()}
+                                onPress={() => deleteItem(e)}
                             >
                                 <View style={styles.removeContainer}>
                                     <Feather name="trash-2" size={24} color={'red'} />

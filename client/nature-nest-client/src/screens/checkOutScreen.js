@@ -5,16 +5,22 @@ import AppBar from '../components/AppBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import React, { useEffect, useState } from 'react';
+import SearchBar from '../components/SearchBar';
 
 
 function CheckOutScreen({ route, navigation }) {
-    const [data, setData] = useState([]);
+    const [total, setTotal] = useState();
     const [isLoading, setIsLoading] = useState(true);
     
     const getData = async () => {
         try {
-            var current = await AsyncStorage.getItem('cart');
-            setData(JSON.parse(current));
+            var data = await AsyncStorage.getItem('cart');
+            const existingData = JSON.parse(data);
+            let subtotal = 0;
+            existingData.forEach(element => {
+                subtotal += parseInt(element.price * element.unit);
+            });
+            setTotal(subtotal);
         } catch (error) {
             console.log(error, 'error')
         }
@@ -28,15 +34,15 @@ function CheckOutScreen({ route, navigation }) {
     return (
         <View style={styles.container}>
             <AppBar></AppBar>
-            <Text style={styles.title}>Order</Text>
+            <Text style={styles.title}>Order Summery</Text>
             <View style={styles.card}>
                 <View style={styles.cardSection}>
                     <Text style={styles.cardTextHead} >Subtotal</Text>
-                    <Text style={styles.cardTextDetail}>$49.72</Text>
+                    <Text style={styles.cardTextDetail}>${total}</Text>
                 </View>
                 <View style={styles.cardSection}>
                     <Text style={styles.cardTextHead} >Tax</Text>
-                    <Text style={styles.cardTextDetail}>$2.5</Text>
+                    <Text style={styles.cardTextDetail}>${0.13 * total}</Text>
                 </View>
                 <View style={styles.cardSection}>
                     <Text style={styles.cardTextHead} >Delivery</Text>
@@ -44,13 +50,25 @@ function CheckOutScreen({ route, navigation }) {
                 </View>
                 <View style={styles.cardSectionTotal}>
                     <Text style={styles.cardTextHeadTotal} >Total</Text>
-                    <Text style={styles.cardTextDetailTotal}>$52.52</Text>
+                    <Text style={styles.cardTextDetailTotal}>${(0.13*total) + total}</Text>
                 </View>
+            </View>
+            <Text style={styles.title}>Shipping Details</Text>
+            <SearchBar placeholder={"Delivery Address"} icon={'map-pin'}></SearchBar>
+            <View style={styles.postalEmailContainer}>
+            <SearchBar placeholder={"Postal Code                "} icon={'flag'}></SearchBar>
+            <SearchBar placeholder={"Email Address                  "} icon={'mail'}></SearchBar>
             </View>
             <View style={styles.button}>
                 <Pressable>
-                    <Text style={styles.text}>Checkout</Text>
+                    <Text style={styles.text}>Place Order</Text>
                 </Pressable>
+            </View>
+            <Text style={styles.title}>Payment Details</Text>
+            <SearchBar placeholder={"Credit Card Number"} icon={'map-pin'}></SearchBar>
+            <View style={styles.postalEmailContainer}>
+            <SearchBar placeholder={"Expiry Date                "} icon={'flag'}></SearchBar>
+            <SearchBar placeholder={"CVV                        "} icon={'mail'}></SearchBar>
             </View>
         </View >)
 
@@ -61,10 +79,11 @@ const styles = StyleSheet.create({
         flex: 1
     },
     title: {
-        fontSize: 45,
+        fontSize: 23,
         marginLeft: 15,
-        fontFamily: 'Light',
+        fontFamily: 'Regular',
         color: Theme.primaryColor,
+        marginTop: 18,
     },
     button: {
         position: 'absolute',
@@ -92,7 +111,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingHorizontal: 20,
         paddingVertical: 15,
-
+        marginTop: 15,
     },
     cardSection : {
         flexDirection: 'row',
@@ -128,6 +147,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginTop: 5,
     },
+
+    postalEmailContainer : {
+     flexDirection: 'row',
+     justifyContent: 'space-between',
+     maxWidth: '44.5%'
+    }
 
 });
 

@@ -1,18 +1,67 @@
 import { Text, View, Image, ScrollView, Pressable, StyleSheet } from 'react-native';
 import Theme from '../Theme';
 import { Feather } from '@expo/vector-icons';
-import { useFonts } from 'expo-font';
+import { useState } from 'react';
+import AwesomeAlert from 'react-native-awesome-alerts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function DetailScreen({ route, navigation }) {
 
     const data = route.params
-    //loads the fonts before rendering the UI elements
-    const [loaded] = useFonts({
-        'Bold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
-    });
 
-    if (!loaded) {
-        return null;
+    const [showAlert, setShowAlert] = useState(false);
+
+    const handelFavouriteButton = async (product) => {
+        setShowAlert(true);
+
+        setTimeout(() => {
+            setShowAlert(false)
+        }, 1000);
+
+        try {
+
+            product.unit = 1;
+            const existingData = await AsyncStorage.getItem('cart')
+            if(existingData !== null) {
+                const existingArray = JSON.parse(existingData)
+
+                let unitUpdateItem = null;
+                const newData = [];
+                existingArray.forEach(element => {
+                    if(element.name === product.name) {
+                        console.log('Names', element.name, product.name)
+                        unitUpdateItem = element
+                        element.unit += product.unit;
+                         newData.push(unitUpdateItem);
+                    } else {
+                    newData.push(element); }
+                });
+                console.log('check', unitUpdateItem);
+                if(unitUpdateItem === null) {
+                    existingArray.push(product)
+                    console.log('DATA', newData);
+                    console.log('Unit not changed')
+                    const jsonValue = JSON.stringify(existingArray)
+                      await AsyncStorage.setItem('cart', jsonValue);
+
+                } else if (unitUpdateItem !== null) {
+                    const jsonValue = JSON.stringify(newData)
+               await AsyncStorage.setItem('cart', jsonValue);
+
+                }
+              
+            } else {
+                const jsonValue = JSON.stringify([product])
+
+                await AsyncStorage.setItem('cart', jsonValue);
+            }
+
+            console.log(JSON.parse(await AsyncStorage.getItem('cart')))
+
+
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -22,17 +71,22 @@ function DetailScreen({ route, navigation }) {
                 <Image style={styles.image} key={data.url} resizeMode='cover' source={{ uri: data.url }} />
             </View>
             <Text style={styles.title}>{data.name}</Text>
-            <Text style={styles.priceText}>{data.price}</Text>
+            <Text style={styles.priceText}>${data.price}</Text>
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.description}>
                     {data.detail}
                 </Text>
             </ScrollView>
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={() => { console.log('clicked') }}>
+                <Pressable style={styles.button} onPress={() => handelFavouriteButton(data)}>
                     <Text style={styles.text}>Add To Cart</Text>
                 </Pressable>
             </View>
+            <AwesomeAlert
+                    show={showAlert}
+                    showProgress={false}
+                    message="Product added to cart Sucessfully"
+            />
         </View>)
 }
 

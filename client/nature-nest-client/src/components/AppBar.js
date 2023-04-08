@@ -3,7 +3,7 @@ import Theme from '../Theme';
 import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 
-function AppBar() {
+function AppBar({navigator}) {
 
     //loads the fonts before rendering the UI elements
     const [loaded] = useFonts({
@@ -18,7 +18,7 @@ function AppBar() {
 
     return (<View style={styles.appBarContainer}>
         <Text style={styles.title}>NatureNest</Text>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={()=> navigator.navigate('Settings')} >
             <View style={styles.menu}>
                 <Feather name="menu" size={20} color={Theme.primaryColor} />
             </View>

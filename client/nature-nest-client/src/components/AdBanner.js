@@ -43,13 +43,13 @@ const AdBanner = () => {
                 >
                     {
                         images.map((e, index) =>
-                            <Image key={e} resizeMode='cover' source={{ uri: e }} style={styles.wrap} />)
+                            <Image key={index} resizeMode='cover' source={{ uri: e }} style={styles.wrap} />)
                     }
                 </ScrollView>
                 <View style={styles.dotWrap}>
                     {
                         images.map((e, index) =>
-                            <Text style={activeImage === index ? styles.activeDot : styles.inactiveDot}>●</Text>
+                            <Text key={index} style={activeImage === index ? styles.activeDot : styles.inactiveDot}>●</Text>
                         )
                     }
                 </View>
