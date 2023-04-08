@@ -94,7 +94,7 @@ function ProductCard({ data, navigation }) {
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={(styles.title)}>{data.name.slice(0, 16) + "..."}</Text>
-                    <Text style={styles.details}>{data.price}</Text>
+                    <Text style={styles.details}>${data.price}</Text>
                 </View>
                 <AwesomeAlert
                     show={showAlert}

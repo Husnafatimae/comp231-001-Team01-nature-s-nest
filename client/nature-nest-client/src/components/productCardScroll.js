@@ -50,7 +50,7 @@ function ProductCardScroll({ navigate }) {
                 {
                     data.map((item, index) => {
                         return (
-                            <ProductCard data={item} navigation={navigate}></ProductCard>
+                            <ProductCard key={index} data={item} navigation={navigate}></ProductCard>
                         )
                     })
                 }

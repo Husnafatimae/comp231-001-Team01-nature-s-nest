@@ -10,6 +10,7 @@ import SearchResultScreen from './src/screens/SearchResultScreen';
 import CartScreen from './src/screens/cartScreen';
 import HomeScreen from './src/screens/homeScreen';
 import CheckOutScreen from './src/screens/checkOutScreen';
+import SettingsScreen from './src/screens/settingsScreen';
 
 import BottomTabNavigator from './src/navigation/bottomTabNavigator';
 
@@ -73,6 +74,13 @@ export default function App() {
           component={CheckOutScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{headerShown: false}}
+        >
+
+        </Stack.Screen>
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -29,9 +29,9 @@ function DetailScreen({ navigation }) {
     return (
 
         <View style={styles.container}>
-            <AppBar></AppBar>
+            <AppBar navigator={navigation}></AppBar>
             <Text style={styles.title}>Welcome!</Text>
-            <SearchBar></SearchBar>
+            <SearchBar placeholder='What are you looking for?' icon={'search'}></SearchBar>
             <AdBanner></AdBanner>
             <Subheading></Subheading>
             <ProductCardScroll navigate={navigation}></ProductCardScroll>
@@ -40,7 +40,7 @@ function DetailScreen({ navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     title: {
         fontSize: 45,

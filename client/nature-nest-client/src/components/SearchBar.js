@@ -5,7 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 
 
-function SearchBar({ onSearch }) {
+function SearchBar({ placeholder, flex, icon, onSearch }) {
 
     const [searchText, setsearchText] = useState('');
 
@@ -28,8 +28,8 @@ function SearchBar({ onSearch }) {
         <View>
 
             <View style={styles.searchBar}>
-                <Feather name="search" size={24} color={Theme.lightGreen} />
-                <TextInput style={{ paddingHorizontal: 10 }} placeholder='What are you looking for?'
+                <Feather name={icon} size={24} color={Theme.lightGreen} />
+                <TextInput style={{ paddingHorizontal: 10, overflow:'scroll' }} placeholder={placeholder}
                     onChangeText={setsearchText}
                     onEndEditing={handelSearch}
                 />
@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
     searchBar: {
         flexDirection: 'row',
         padding: 13,
-        marginHorizontal: 15,
         borderColor: Theme.lightGreen,
         borderWidth: 1.8,
         borderRadius: 30,
         marginTop: 15,
+        marginHorizontal: 12,
     },
     title: {
         fontSize: 45,
