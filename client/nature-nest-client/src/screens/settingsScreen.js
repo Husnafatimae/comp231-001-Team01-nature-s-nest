@@ -15,7 +15,7 @@ function SettingsScreen({ navigation, screenProps }) {
             <Text style={styles.title}>Settings</Text>
             <MenuCard menuTitle={'Profile Options'} menuIcon={'user'} onPress={()=>console.log('Clicked')}></MenuCard>
             <MenuCard menuTitle={'Payment Info'} menuIcon={'credit-card'} onPress={()=>console.log('Clicked')}></MenuCard>
-            <MenuCard menuTitle={'Switch to Adminstrator'} menuIcon={'toggle-left'} onPress={()=>console.log('Clicked')}></MenuCard>
+            <MenuCard menuTitle={'Switch to Adminstrator'} menuIcon={'toggle-left'} onPress={()=> navigation.navigate('Login')}></MenuCard>
             <MenuCard menuTitle={'Contact Us'} menuIcon={'mail'} onPress={()=> Linking.openURL('mailto:support@natureNest.com?subject=Customer Support') }></MenuCard>
             <MenuCard menuTitle={'About NatureNest'} menuIcon={'info'} onPress={()=>console.log('Clicked')}></MenuCard>
             <View style={styles.buttonContainer}>

@@ -11,6 +11,7 @@ import CartScreen from './src/screens/cartScreen';
 import HomeScreen from './src/screens/homeScreen';
 import CheckOutScreen from './src/screens/checkOutScreen';
 import SettingsScreen from './src/screens/settingsScreen';
+import LoginScreen from './src/screens/loginScreen';
 
 import BottomTabNavigator from './src/navigation/bottomTabNavigator';
 
@@ -79,8 +80,14 @@ export default function App() {
         component={SettingsScreen}
         options={{headerShown: false}}
         >
-
         </Stack.Screen>
+
+        <Stack.Screen
+          name='Login'
+          component={LoginScreen}
+          options={{headerShown: false}}
+          >
+          </Stack.Screen>
 
       </Stack.Navigator>
     </NavigationContainer>
