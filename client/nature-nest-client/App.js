@@ -13,6 +13,7 @@ import CheckOutScreen from './src/screens/checkOutScreen';
 import SettingsScreen from './src/screens/settingsScreen';
 import LoginScreen from './src/screens/loginScreen';
 import DashboardScreen from './src/screens/admin/dashboardScreen';
+import AddProductScreen from './src/screens/admin/addProductScreen';
 
 import BottomTabNavigator from './src/navigation/bottomTabNavigator';
 
@@ -93,6 +94,12 @@ export default function App() {
           <Stack.Screen
           name='Dashboard'
           component={DashboardScreen}
+          options={{headerShown: false}}
+          >
+          </Stack.Screen>
+          <Stack.Screen
+          name='AddProduct'
+          component={AddProductScreen}
           options={{headerShown: false}}
           >
           </Stack.Screen>
