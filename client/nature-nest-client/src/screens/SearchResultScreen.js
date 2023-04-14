@@ -6,24 +6,40 @@ import ProductCard from '../components/productCard';
 import SearchBar from '../components/SearchBar';
 import AppBar from '../components/AppBar';
 
+import {useState, useEffect} from 'react'
+
+import { db } from '../../firebase';
+
+import { collection, getDocs, query, where } from 'firebase/firestore/lite';
+
 import data from '../../data';
 
-function SearchResultScreen() {
+function SearchResultScreen({route, navigation}) {
 
-    //loads the fonts before rendering the UI elements
-    const [loaded] = useFonts({
-        'Bold': require('../../assets/fonts/Poppins-SemiBold.ttf'),
-    });
 
-    if (!loaded) {
-        return null;
-    }
+    const queryWord = route.params
+
+    const [data, setData] = useState([]);
+    
+
+    async function getData(db) {
+        const productCol = collection(db, 'products');
+        const productSnapshot = await getDocs(productCol);
+        const productList = productSnapshot.docs.map(doc => doc.data());
+
+        setData(productList.filter(product => product.name == queryWord));
+}
+
+
+    useEffect(()=>{
+        getData(db);
+    },[]);
 
     return (
 
         <View style={styles.container}>
             <AppBar></AppBar>
-            <SearchBar></SearchBar>
+            <SearchBar placeholder='What are you looking for?' icon={'search'}></SearchBar>
             <View>
                 <ScrollView
                     bounces={false}
