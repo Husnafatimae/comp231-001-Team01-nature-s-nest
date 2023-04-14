@@ -8,20 +8,14 @@ import AppBar from '../../components/AppBar'
 function DashboardScreen({ navigation }) {
 
     return (
-
         <View style={styles.container}>
             <AppBar navigator={navigation}></AppBar>
             <Text style={styles.title}>Dashboard</Text>
-            <MenuCard menuTitle={'Profile Options'} menuIcon={'user'} onPress={()=>console.log('Clicked')}></MenuCard>
-            <MenuCard menuTitle={'Payment Info'} menuIcon={'credit-card'} onPress={()=>console.log('Clicked')}></MenuCard>
-            <MenuCard menuTitle={'Switch to Adminstrator'} menuIcon={'toggle-left'} onPress={()=> navigation.navigate('Login')}></MenuCard>
-            <MenuCard menuTitle={'Contact Us'} menuIcon={'mail'} onPress={()=> Linking.openURL('mailto:support@natureNest.com?subject=Customer Support') }></MenuCard>
-            <MenuCard menuTitle={'About NatureNest'} menuIcon={'info'} onPress={()=>console.log('Clicked')}></MenuCard>
-            <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={()=> { navigation.goBack(null)}}>
-                    <Text style={styles.text}>Back to Home</Text>
-                </Pressable>
-            </View>
+            <MenuCard menuTitle={'Add Products'} menuIcon={'plus'} onPress={()=>navigation.navigate('AddProduct')}></MenuCard>
+            <MenuCard menuTitle={'Track Orders'} menuIcon={'activity'} onPress={()=>console.log('Clicked')}></MenuCard>
+            <MenuCard menuTitle={'Inventory'} menuIcon={'archive'} onPress={()=>console.log('Clicked')}></MenuCard>
+            <MenuCard menuTitle={'Create Offer'} menuIcon={'file-plus'} onPress={()=>console.log('Clicked')}></MenuCard>
+            <MenuCard menuTitle={'Continue as a Shopper'} menuIcon={'toggle-left'} onPress={()=> navigation.navigate('HomePage')}></MenuCard>
         </View>)
 }
 

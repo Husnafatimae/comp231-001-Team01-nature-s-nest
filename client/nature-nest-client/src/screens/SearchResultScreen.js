@@ -27,7 +27,7 @@ function SearchResultScreen({route, navigation}) {
         const productSnapshot = await getDocs(productCol);
         const productList = productSnapshot.docs.map(doc => doc.data());
 
-        setData(productList.filter(product => product.name == queryWord));
+        setData(productList.filter(product => product.name.toLowerCase() == queryWord.toLowerCase()));
 }
 
 
@@ -39,7 +39,7 @@ function SearchResultScreen({route, navigation}) {
 
         <View style={styles.container}>
             <AppBar></AppBar>
-            <SearchBar placeholder='What are you looking for?' icon={'search'}></SearchBar>
+            <SearchBar onSearch={(queryWord) => navigation.navigate('SearcResult', queryWord )} placeholder='What are you looking for?' icon={'search'}></SearchBar>
             <View>
                 <ScrollView
                     bounces={false}
@@ -47,7 +47,7 @@ function SearchResultScreen({route, navigation}) {
                 >
                     <View style={styles.cardContainer}>
                         {data.map((item, index) => {
-                            return <ProductCard key={index} data={item}></ProductCard>
+                            return <ProductCard key={index} data={item} navigation={navigation}></ProductCard>
                         })}
                     </View>
                 </ScrollView>
