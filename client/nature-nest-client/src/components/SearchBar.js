@@ -26,7 +26,6 @@ function SearchBar({ placeholder, flex, icon, onSearch }) {
 
     return (
         <View>
-
             <View style={styles.searchBar}>
                 <Feather name={icon} size={24} color={Theme.lightGreen} />
                 <TextInput style={{ paddingHorizontal: 10, overflow:'scroll' }} placeholder={placeholder}

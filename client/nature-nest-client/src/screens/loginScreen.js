@@ -5,21 +5,59 @@ import SearchBar from '../components/SearchBar';
 import MenuCard from '../components/menuCard';
 import { Linking } from 'react-native';
 
+import {firebase} from '../../firebase'
+
+import {useState, useEffect} from 'react'
 
 function LoginScreen({ navigation}) {
+
+    
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
+
+
+    useEffect(()=>{
+        firebase.auth().onAuthStateChanged(user=> {
+            if(user) {
+                navigation.navigate('Dashboard')
+            }
+        })
+    },
+    [])
+
+    const handelLogin = async (email, password) => {
+        try{
+            await firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(userCreds => {
+                const user = userCreds.user;
+                navigation.navigate('Dashboard')
+
+            })
+
+        } catch (error) {
+            setShowMessage(true);
+            setMessage('Enter vaild email and password')
+            console.log(error.message);
+         }
+    }
+    
+
     return (
 
         <View style={styles.container}>
             <Text style={styles.logo}>NatureNest</Text>
             <Text style={styles.subHeading}>Login as admin</Text>
-            <SearchBar icon='user' placeholder='Enter user name'></SearchBar>
-            <SearchBar icon='key' placeholder='Password'></SearchBar>
+            <View style={showMessage? styles.messageBox : null}><Text style={styles.messageText}>{message}</Text></View>
+            <SearchBar icon='user' placeholder='Enter user name' onSearch={(value) => setEmail(value)}></SearchBar>
+            <SearchBar icon='key' placeholder='Password' onSearch={(value) => setPassword(value)}></SearchBar>
             <View style={styles.buttonContainer}>
-                <Pressable style={styles.button} onPress={()=> { navigation.goBack(null)}}>
+                <Pressable style={styles.button} onPress={()=> { handelLogin(email,password)}}>
                     <Text style={styles.text}>Login</Text>
                 </Pressable>
             </View>
-            <Pressable style={styles.buttonSecondary} onPress={()=> { navigation.navigate('Home')}}>
+            <Pressable style={styles.buttonSecondary} onPress={()=> { navigation.navigate('HomePage')}}>
                     <Text style={styles.textSecondary}>Continue shopping</Text>
             </Pressable>
         </View>)
@@ -85,6 +123,19 @@ const styles = StyleSheet.create({
         borderWidth: 1.8,
         borderColor: Theme.primaryColor
     },
+    messageBox: {
+        backgroundColor: '#ffadad',
+        paddingHorizontal: 18,
+        paddingVertical: 10,
+        borderRadius: 30,
+        marginHorizontal: 12,
+        borderWidth: 2,
+        borderColor: '#ea8677',
+    },
+    messageText: {
+        fontFamily: 'Regular', 
+        color: '#bc1c03'
+    }
 });
 
 export default LoginScreen;

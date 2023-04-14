@@ -31,7 +31,7 @@ function DetailScreen({ navigation }) {
         <View style={styles.container}>
             <AppBar navigator={navigation}></AppBar>
             <Text style={styles.title}>Welcome!</Text>
-            <SearchBar placeholder='What are you looking for?' icon={'search'}></SearchBar>
+            <SearchBar placeholder='What are you looking for?' icon={'search'} onSearch={(queryWord) => navigation.navigate('SearcResult', queryWord )}></SearchBar>
             <AdBanner></AdBanner>
             <Subheading></Subheading>
             <ProductCardScroll navigate={navigation}></ProductCardScroll>

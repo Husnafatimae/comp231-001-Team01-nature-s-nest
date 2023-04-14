@@ -1,5 +1,5 @@
 import { View, ScrollView, Image, Text, Dimensions, StyleSheet, Pressable, Alert } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Theme from '../Theme';
 import { Feather } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
@@ -7,13 +7,29 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
 import ProductCard from './productCard';
 
-import data from '../../data';
+import { db } from '../../firebase';
+
+import { collection, getDocs } from 'firebase/firestore/lite';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 
 function ProductCardScroll({ navigate }) {
+
+    const [data, setData] = useState([]);
+    
+
+    async function getData(db) {
+        const productCol = collection(db, 'products');
+        const productSnapshot = await getDocs(productCol);
+        const productList = productSnapshot.docs.map(doc => doc.data());
+        setData(productList);
+      }   
+
+    useEffect(()=>{
+        getData(db);
+    },[])
 
     const onChange = (nativeEvent) => {
 
