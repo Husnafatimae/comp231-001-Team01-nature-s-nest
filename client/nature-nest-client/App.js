@@ -14,6 +14,7 @@ import SettingsScreen from './src/screens/settingsScreen';
 import LoginScreen from './src/screens/loginScreen';
 import DashboardScreen from './src/screens/admin/dashboardScreen';
 import AddProductScreen from './src/screens/admin/addProductScreen';
+import InventoryScreen from './src/screens/admin/inventoryScreen';
 
 import BottomTabNavigator from './src/navigation/bottomTabNavigator';
 
@@ -100,6 +101,13 @@ export default function App() {
           <Stack.Screen
           name='AddProduct'
           component={AddProductScreen}
+          options={{headerShown: false}}
+          >
+          </Stack.Screen>
+
+          <Stack.Screen
+          name='Inventory'
+          component={InventoryScreen}
           options={{headerShown: false}}
           >
           </Stack.Screen>

@@ -13,7 +13,7 @@ function DashboardScreen({ navigation }) {
             <Text style={styles.title}>Dashboard</Text>
             <MenuCard menuTitle={'Add Products'} menuIcon={'plus'} onPress={()=>navigation.navigate('AddProduct')}></MenuCard>
             <MenuCard menuTitle={'Track Orders'} menuIcon={'activity'} onPress={()=>console.log('Clicked')}></MenuCard>
-            <MenuCard menuTitle={'Inventory'} menuIcon={'archive'} onPress={()=>console.log('Clicked')}></MenuCard>
+            <MenuCard menuTitle={'Inventory'} menuIcon={'archive'} onPress={()=>navigation.navigate('Inventory')}></MenuCard>
             <MenuCard menuTitle={'Create Offer'} menuIcon={'file-plus'} onPress={()=>console.log('Clicked')}></MenuCard>
             <MenuCard menuTitle={'Continue as a Shopper'} menuIcon={'toggle-left'} onPress={()=> navigation.navigate('HomePage')}></MenuCard>
         </View>)
